@@ -1,0 +1,28 @@
+{
+    "manifest_version": 3,
+    "name": "Skip me ",
+    "version": "0.0.1",
+    "description": "Skip boring Global Exam exercises",
+    "content_scripts": [
+        {
+            "matches": [
+                "https://exam.global-exam.com/**"
+            ],
+            "js": [
+                "index.js"
+            ]
+        }
+    ],
+    "host_permissions": [
+        "https://exam.global-exam.com/**"
+    ],
+    "action": {
+        "default_icon": {
+            "16": "images/gyga16.png",
+            "24": "images/gyga32.png",
+            "32": "images/gyga32.png"
+        },
+        "default_title": "Skip me",
+        "default_popup": "index.html"
+    }
+}
