@@ -2,14 +2,12 @@ const exerciceType = document.getElementsByClassName(
   "font-bold text-size-20 capitalize lg:w-50 lg:truncate"
 )[0]?.innerText;
 
-console.log(exerciceType);
-
 let progressBar = document.getElementsByClassName(
   "h-2 bg-primary-80 rounded transition-all duration-150"
 );
 
 async function showAnswers() {
-  if (exerciceType == "Listening") {
+  if (exerciceType == "Listening" || exerciceType == "Reading") {
     const showAnswers = document.querySelectorAll(".leading-none");
 
     for (let aws of showAnswers) {
@@ -23,13 +21,11 @@ async function showAnswers() {
     )[0];
 
     showAnswers.click();
-
-    // flex items-center justify-between pr-5 py-3 rounded-size-24 pl-4 cursor-pointer mb-1 bg-success-05
   }
 }
 
 async function selectAnswers() {
-  if (exerciceType == "Listening") {
+  if (exerciceType == "Listening" || "Reading") {
     const answers = document.getElementsByClassName(
       "flex items-center justify-between pr-5 py-3 rounded-size-24 pl-8 cursor-pointer mb-1 bg-success-05"
     );
@@ -38,45 +34,59 @@ async function selectAnswers() {
       aws.click();
     }
   } else {
-    //TODO
+    const answer = document.getElementsByClassName(
+      "flex items-center justify-between pr-5 py-3 rounded-size-24 pl-4 cursor-pointer mb-1 bg-success-05"
+    );
+
+    answer[answer.length - 1].click();
   }
 }
 
 async function validate() {
-  if (exerciceType == "Listening") {
+  if (exerciceType == "Listening" || "Reading") {
     const submit = document.getElementsByClassName(
       "min-w-48 button-solid-primary-large"
     )[0];
 
     submit.click();
   } else {
-    //TODO
+    const submit = document.getElementsByClassName(
+      "min-w-48 button-solid-primary-large"
+    )[0];
+
+    submit.click();
   }
 }
 
-async function later(delay) {
-  return new Promise(function (resolve) {
-    setTimeout(resolve, delay);
-  });
+async function goNextQuestion() {
+  const nextButton = document.getElementsByClassName(
+    "min-w-48 button-solid-primary-large"
+  )[0];
+
+  nextButton.click();
 }
 
 async function submit() {
   showAnswers().then(() => {
-    selectAnswers().then(() =>
-      validate()
-        .then(() => {
-          goNextExercise();
-        })
-        .catch(() => {
-          goNextExercise();
-        })
-    );
+    selectAnswers().then(() => {
+      if (exerciceType == "Listening" || "Reading") {
+        validate()
+          .then(() => {
+            goNextExercise();
+          })
+          .catch(() => {
+            goNextExercise();
+          });
+      } else {
+        goNextQuestion();
+      }
+    });
   });
 }
 
 function goNextExercise() {
   const nextButton = document.getElementsByClassName(
-    "button-solid-primary-medium lg:mb-6 lg:self-end"
+    "button-solid-primary-medium"
   )[0];
 
   nextButton.click();
